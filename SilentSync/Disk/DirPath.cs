@@ -36,7 +36,16 @@ namespace SilentOrbit.Disk
 
         #region Path operations
 
-        public override DirPath Parent => new DirPath(DirectoryInfo.Parent);
+        public override DirPath Parent
+        {
+            get
+            {
+                var parent = DirectoryInfo.Parent;
+                if (parent == null)
+                    return null;
+                return new DirPath(parent);
+            }
+        }
 
         public DirPath CombineDir(params string[] parts)
         {
@@ -66,7 +75,16 @@ namespace SilentOrbit.Disk
 
         public bool Exists => DirectoryInfo.Exists;
 
-        public string DirName => Name;
+        public override string Name
+        {
+            get
+            {
+                if (DirectoryInfo.Parent == null)
+                    return PathFull;
+                else
+                    return base.Name;
+            }
+        }
 
         #endregion
 
@@ -75,6 +93,11 @@ namespace SilentOrbit.Disk
         public IEnumerable<DirPath> GetDirectories()
         {
             return GetDirectories(DirectoryInfo.EnumerateDirectories());
+        }
+
+        public IEnumerable<DirPath> GetDirectories(string pattern)
+        {
+            return GetDirectories(DirectoryInfo.EnumerateDirectories(pattern));
         }
 
         public IEnumerable<DirPath> GetDirectories(string pattern, SearchOption searchOption)
@@ -165,7 +188,7 @@ namespace SilentOrbit.Disk
                 files += 1;
             }
             foreach (var d in GetDirectories())
-                files += d.CopyDirectory(target.CombineDir(d.DirName));
+                files += d.CopyDirectory(target.CombineDir(d.Name));
 
             return files;
         }

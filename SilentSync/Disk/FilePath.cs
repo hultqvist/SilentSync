@@ -31,7 +31,7 @@ namespace SilentOrbit.Disk
 
         #region File operations
 
-        public bool Exists => FileInfo.Exists;
+        public bool Exists() => File.Exists(PathFull);
 
         public void ClearReadOnly()
         {
@@ -90,7 +90,7 @@ namespace SilentOrbit.Disk
         #region String operations
 
         public string FileName => Name;
-
+        
         public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(PathFull);
 
         #endregion
@@ -124,7 +124,7 @@ namespace SilentOrbit.Disk
             Retry(() =>
             {
                 //Read only generated files
-                if (Exists)
+                if (Exists())
                 {
                     File.SetAttributes(PathFull, FileAttributes.Normal);
                 }
@@ -143,7 +143,7 @@ namespace SilentOrbit.Disk
             Parent.CreateDirectory();
 
             //Read only generated files
-            if (Exists)
+            if (Exists())
                 FileInfo.Attributes = FileAttributes.Normal;
 
             File.WriteAllText(PathFull, text, new UTF8Encoding(false, true));
@@ -155,7 +155,7 @@ namespace SilentOrbit.Disk
             Parent.CreateDirectory();
 
             //Read only generated files
-            if (Exists)
+            if (Exists())
                 FileInfo.Attributes = FileAttributes.Normal;
 
             File.WriteAllText(PathFull, text, new UTF8Encoding(false, true));

@@ -10,7 +10,7 @@ namespace SilentOrbit.Disk
     /// <summary>
     /// Base class for FilePath and DirPath
     /// </summary>
-    public abstract class FullDiskPath
+    public abstract class FullDiskPath : IComparable
     {
         public readonly string PathFull;
 
@@ -37,7 +37,16 @@ namespace SilentOrbit.Disk
         /// <summary>
         /// File or directory name.
         /// </summary>
-        public string Name => Path.GetFileName(PathFull);
+        public virtual string Name
+        {
+            get
+            {
+                var n = Path.GetFileName(PathFull);
+                if (string.IsNullOrEmpty(n))
+                    throw new InvalidProgramException();
+                return n;
+            }
+        }
 
         public bool StartsWith(FullDiskPath test)
         {
@@ -134,5 +143,6 @@ namespace SilentOrbit.Disk
         }
 
         #endregion
+
     }
 }
