@@ -14,6 +14,8 @@ namespace SilentOrbit.Disk
     {
         public readonly string PathFull;
 
+        public abstract bool Exists();
+
         protected FullDiskPath(string value)
         {
             if (value.EndsWith(":\\"))

@@ -31,7 +31,7 @@ namespace SilentOrbit.Disk
 
         #region File operations
 
-        public bool Exists() => File.Exists(PathFull);
+        public override bool Exists() => File.Exists(PathFull);
 
         public void ClearReadOnly()
         {
@@ -67,6 +67,11 @@ namespace SilentOrbit.Disk
             return new FilePath(PathFull + text);
         }
 
+        /// <summary>
+        /// Replace the current extension with a new extension.
+        /// </summary>
+        /// <param name="newExtension"></param>
+        /// <returns></returns>
         public FilePath GetWithExtension(string newExtension)
         {
             Debug.Assert(newExtension == "" || newExtension.StartsWith("."));

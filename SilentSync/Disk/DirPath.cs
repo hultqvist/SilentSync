@@ -73,7 +73,7 @@ namespace SilentOrbit.Disk
 
         #region Directory properties
 
-        public bool Exists => DirectoryInfo.Exists;
+        public override bool Exists() => Directory.Exists(PathFull);
 
         public override string Name
         {
@@ -147,7 +147,7 @@ namespace SilentOrbit.Disk
         /// </summary>
         public void EmptyDirectory()
         {
-            if (Exists == false)
+            if (Exists() == false)
             {
                 Directory.CreateDirectory(PathFull);
                 return;
