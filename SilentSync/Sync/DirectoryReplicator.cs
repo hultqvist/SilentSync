@@ -219,21 +219,28 @@ namespace SilentOrbit.Sync
                 }
 
                 //New and updated
-                queue.Run(() =>
+                //queue.Run(() =>
+                //{
+                try
                 {
                     s.CopyTo(t);
                     reportstats?.Invoke();
-                });
+                }
+                catch (UnauthorizedAccessException ua)
+                {
+                    Console.Error.WriteLine(ua.Message);
+                }
+                //});
             }
 
             foreach (var t in targetDic.Values)
             {
                 //Deleted
-                queue.Run(() =>
-                {
-                    t.DeleteFile();
-                    stats.UpdateDel(t);
-                });
+                //queue.Run(() =>
+                //{
+                t.DeleteFile();
+                stats.UpdateDel(t);
+                //});
             }
         }
 
