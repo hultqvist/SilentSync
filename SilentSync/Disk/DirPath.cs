@@ -181,7 +181,7 @@ namespace SilentOrbit.Disk
         {
             int files = 0;
 
-            Directory.CreateDirectory(target.PathFull);
+            target.CreateDirectory();
             foreach (var f in GetFiles())
             {
                 f.CopyTo(target.CombineFile(f.FileName));
