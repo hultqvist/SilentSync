@@ -62,8 +62,8 @@ namespace SilentOrbit.Disk
             return new RelDirPath(path.PathRel);
         }
 
-        public RelDirPath CombineDir(params string[] parts) => (RelDirPath)Combine(parts).PathRel;
-        public RelFilePath CombineFile(params string[] parts) => (RelFilePath)Combine(parts).PathRel;
+        public RelDirPath CombineDir(params string[] parts) => new RelDirPath(Combine(parts).PathRel);
+        public RelFilePath CombineFile(params string[] parts) => new RelFilePath(Combine(parts).PathRel);
 
         #endregion
 
