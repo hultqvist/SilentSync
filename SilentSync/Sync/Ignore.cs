@@ -25,8 +25,10 @@ namespace SilentOrbit.Sync
 
         public void IgnoreFileName(string name)
         {
-            var pattern = "^" + Regex.Escape(name) + "$";
-            ignoreFileNames.Add(new Regex(pattern, ignoreOptions));
+            var regex = Regex.Escape(name);
+            regex = regex.Replace(Regex.Escape("*"), ".*");
+            regex = "^" + regex + "$";
+            ignoreFileNames.Add(new Regex(regex, ignoreOptions));
         }
 
         /// <summary>
@@ -40,8 +42,10 @@ namespace SilentOrbit.Sync
 
         public void IgnoreDirName(string name)
         {
-            var pattern = "^" + Regex.Escape(name) + "$";
-            ignoreDirNames.Add(new Regex(pattern, ignoreOptions));
+            var regex = Regex.Escape(name);
+            regex = regex.Replace(Regex.Escape("*"), ".*");
+            regex = "^" + regex + "$";
+            ignoreDirNames.Add(new Regex(regex, ignoreOptions));
         }
 
         internal bool TestFilename(string name) => IsMatch(ignoreFileNames, name);

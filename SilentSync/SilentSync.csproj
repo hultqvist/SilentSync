@@ -8,4 +8,7 @@
     <Product>SilentSync</Product>
     <Copyright>Copyright ©  2019</Copyright>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
 </Project>

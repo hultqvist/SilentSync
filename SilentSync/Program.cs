@@ -22,7 +22,13 @@ One direction sync from source to destination, files in destination are copied a
 
             try
             {
-                Sync(args);
+                if (args.Length == 1)
+                    SyncConfig.Run(new FilePath(args[0]));
+
+                if (args.Length == 2)
+                    Sync(args);
+
+                throw new ArgumentException();
             }
             catch (Exception ex)
             {

@@ -39,20 +39,22 @@ namespace SilentOrbit.Sync
         void Run()
         {
             //Make sure we are replicating the right folders
+            const string syncIDName = "SyncID.txt";
+
             //Require matching files
             try
             {
-                var sourceCheck = job.Source.CombineFile("sync.txt").ReadAllText();
-                var targetCheck = job.Target.CombineFile("sync.txt").ReadAllText();
+                var sourceCheck = job.Source.CombineFile(syncIDName).ReadAllText();
+                var targetCheck = job.Target.CombineFile(syncIDName).ReadAllText();
 
                 if (sourceCheck.StartsWith("SyncID:") == false)
-                    throw new Exception("sync.txt must start with \"SyncID:\"");
+                    throw new Exception(syncIDName + " must start with \"SyncID:\"");
                 if (sourceCheck != targetCheck)
-                    throw new Exception("sync.txt does not match in source and target");
+                    throw new Exception(syncIDName + " does not match in source and target");
             }
             catch (FileNotFoundException fnf)
             {
-                throw new Exception("Missing sync.txt in " + fnf.FileName);
+                throw new Exception("Missing " + syncIDName + " in " + fnf.FileName);
             }
 
             try
