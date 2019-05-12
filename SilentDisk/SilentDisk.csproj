@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>SilentOrbit</RootNamespace>
-    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
+    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>SilentDisk</AssemblyTitle>
     <Product>SilentDisk</Product>
   </PropertyGroup>
