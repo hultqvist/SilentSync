@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SilentOrbit</RootNamespace>
+    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
+    <AssemblyTitle>SilentDisk</AssemblyTitle>
+    <Product>SilentDisk</Product>
+  </PropertyGroup>
+
+</Project>
