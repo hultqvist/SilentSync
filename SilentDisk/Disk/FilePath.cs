@@ -141,7 +141,7 @@ namespace SilentOrbit.Disk
 
         public void Move(FilePath target) => File.Move(PathFull, target.PathFull);
 
-        public string ReadAllText() => File.ReadAllText(PathFull, Encoding.UTF8);
+        public string ReadAllText() => File.ReadAllText(LongPathFull, Encoding.UTF8);
 
         public void WriteAllTextRO(string text)
         {

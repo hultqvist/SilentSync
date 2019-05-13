@@ -13,6 +13,7 @@ namespace SilentOrbit.Disk
     public abstract class FullDiskPath : IComparable
     {
         public readonly string PathFull;
+        public readonly string LongPathFull;
 
         public abstract bool Exists();
 
@@ -32,6 +33,7 @@ namespace SilentOrbit.Disk
                 throw new ArgumentException("Expected a full path: " + value + " != " + full);
 
             PathFull = value;
+            LongPathFull = @"\\?\" + PathFull;
         }
 
         #region Path string operations

@@ -73,7 +73,7 @@ namespace SilentOrbit.Disk
 
         #region Directory properties
 
-        public override bool Exists() => Directory.Exists(PathFull);
+        public override bool Exists() => Directory.Exists(LongPathFull);
 
         public override string Name
         {
@@ -138,7 +138,7 @@ namespace SilentOrbit.Disk
 
         public void CreateDirectory()
         {
-            Retry(() => Directory.CreateDirectory(PathFull));
+            Retry(() => Directory.CreateDirectory(LongPathFull));
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace SilentOrbit.Disk
         {
             if (Exists() == false)
             {
-                Directory.CreateDirectory(PathFull);
+                Directory.CreateDirectory(LongPathFull);
                 return;
             }
 
@@ -164,7 +164,7 @@ namespace SilentOrbit.Disk
                     f.DeleteFile();
                 }
 
-                foreach (var d in Directory.GetDirectories(PathFull))
+                foreach (var d in Directory.GetDirectories(LongPathFull))
                 {
                     Directory.Delete(d, true);
                 }
@@ -198,13 +198,13 @@ namespace SilentOrbit.Disk
             if (File.Exists(PathFull))
                 throw new InvalidOperationException("Expected a directory, found a file");
 
-            if (Directory.Exists(PathFull))
-                Directory.Delete(PathFull, recursive: true);
+            if (Directory.Exists(LongPathFull))
+                Directory.Delete(LongPathFull, recursive: true);
         }
 
         public void DeleteEmptyDir()
         {
-            Directory.Delete(PathFull, recursive: true);
+            Directory.Delete(LongPathFull, recursive: true);
         }
 
         #endregion
