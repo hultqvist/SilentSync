@@ -63,7 +63,7 @@ namespace SilentOrbit.Disk
             string path = PathFull;
             foreach (var p in parts)
             {
-                path = Path.Combine(path, p);
+                path = Path.Combine(path, p.Replace('/', '\\'));
             }
 
             return new FilePath(path);
@@ -143,7 +143,7 @@ namespace SilentOrbit.Disk
 
         /// <summary>
         /// Delete all files and folders inside
-        /// but lead the root folder intact
+        /// but leave the root folder intact
         /// </summary>
         public void EmptyDirectory()
         {
