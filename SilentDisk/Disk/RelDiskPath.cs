@@ -15,9 +15,8 @@ namespace SilentOrbit.Disk
 
         public RelDiskPath(string relPath)
         {
-            if (relPath.Contains("/"))
-                throw new ArgumentException("/ in disk path");
-
+            relPath = relPath.Replace('/', '\\');
+            
             if (relPath.StartsWith("\\"))
                 throw new ArgumentException("Rel paths can't start with \\");
 

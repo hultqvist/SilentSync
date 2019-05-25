@@ -51,9 +51,7 @@ namespace SilentOrbit.Disk
         {
             string path = PathFull;
             foreach (var p in parts)
-            {
-                path = Path.Combine(path, p);
-            }
+                path = Combine(path, p);
 
             return new DirPath(path);
         }
@@ -62,11 +60,22 @@ namespace SilentOrbit.Disk
         {
             string path = PathFull;
             foreach (var p in parts)
-            {
-                path = Path.Combine(path, p.Replace('/', '\\'));
-            }
+                path = Combine(path, p);
 
             return new FilePath(path);
+        }
+
+        /// <summary>
+        /// Accepth both '/' and '\' as separators.
+        /// Treat all subpaths as relative paths, trim '\' before combining.
+        /// </summary>
+        private static string Combine(string basePath, string subPath)
+        {
+            subPath = subPath.Replace('/', '\\');
+            Debug.Assert(Path.GetFullPath(basePath) == basePath, "Expected full path");
+            Debug.Assert(subPath.StartsWith(@"\") == false, "Found leading / in subPath");
+            subPath = subPath.Trim('\\');
+            return Path.Combine(basePath, subPath);
         }
 
         #endregion
