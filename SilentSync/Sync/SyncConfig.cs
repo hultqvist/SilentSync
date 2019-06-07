@@ -18,6 +18,9 @@ namespace SilentOrbit.Sync
 
             foreach (var targetBasePath in config.Target)
             {
+                if (new DirPath(targetBasePath).Exists() == false)
+                    continue;
+
                 foreach (var sourcePath in config.Source)
                 {
                     var job = new Job();
