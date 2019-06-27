@@ -33,7 +33,11 @@ namespace SilentOrbit.Disk
                 throw new ArgumentException("Expected a full path: " + value + " != " + full);
 
             PathFull = value;
-            LongPathFull = @"\\?\" + PathFull;
+
+            if (PathFull.StartsWith(@"\\"))
+                LongPathFull = PathFull;
+            else
+                LongPathFull = @"\\?\" + PathFull;
         }
 
         #region Path string operations
