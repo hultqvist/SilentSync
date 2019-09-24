@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SilentOrbit.Disk
 {
@@ -62,6 +63,11 @@ namespace SilentOrbit.Disk
 
         public override DirPath Parent => new DirPath(FileInfo.Directory);
 
+        /// <summary>
+        /// Adds to path without adding path separator
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public FilePath AppendPath(string text)
         {
             return new FilePath(PathFull + text);
@@ -95,8 +101,10 @@ namespace SilentOrbit.Disk
         #region String operations
 
         public string FileName => Name;
-        
+
         public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(PathFull);
+
+        public string Extension => Path.GetExtension(PathFull);
 
         #endregion
 
@@ -153,6 +161,31 @@ namespace SilentOrbit.Disk
 
             File.WriteAllText(PathFull, text, new UTF8Encoding(false, true));
             SetAttributes(FileAttributes.ReadOnly);
+        }
+
+        static readonly Regex reUniqueSuffix = new Regex(@"^(.*) \(([0-9]+)\)$", RegexOptions.Compiled);
+
+        /// <summary>
+        /// Makes sure the file doesn't exist.
+        /// Add " (1)" and increase numbers until there is no existing file there.
+        /// </summary>
+        public FilePath MakeUnique()
+        {
+            var targetPath = this;
+            while (targetPath.Exists())
+            {
+                var m = reUniqueSuffix.Match(targetPath.FileNameWithoutExtension);
+                if (m.Success)
+                {
+                    var filename = m.Groups[1].Value + " (" + (int.Parse(m.Groups[2].Value) + 1) + ")" + targetPath.Extension;
+                    targetPath = targetPath.Parent.CombineFile(filename);
+                }
+                else
+                {
+                    targetPath = targetPath.Parent.CombineFile(targetPath.FileNameWithoutExtension + " (1)" + targetPath.Extension);
+                }
+            }
+            return targetPath;
         }
 
         public void WriteAllText(string text)
