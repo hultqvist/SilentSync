@@ -28,6 +28,20 @@ namespace SilentOrbit.Disk
         {
         }
 
+        /// <summary>
+        /// Combine a relative or absolute path with a base directory.
+        /// </summary>
+        /// <param name="baseDir"></param>
+        /// <param name="pathRelAbs">Relative or absolute path</param>
+        /// <returns></returns>
+        public DirPath CombineRelative(string pathRelAbs)
+        {
+            if (Path.IsPathRooted(pathRelAbs))
+                return new DirPath(pathRelAbs);
+            else
+                return CombineDir(pathRelAbs);
+        }
+
         //Only explicit
         public static explicit operator DirPath(string value)
         {
@@ -127,11 +141,17 @@ namespace SilentOrbit.Disk
 
         public IEnumerable<FilePath> GetFiles(string pattern)
         {
+            if (DirectoryInfo.Exists == false)
+                return new List<FilePath>();
+
             return GetFiles(DirectoryInfo.EnumerateFiles(pattern, SearchOption.TopDirectoryOnly));
         }
 
         public IEnumerable<FilePath> GetFiles(string pattern, SearchOption searchOption)
         {
+            if (DirectoryInfo.Exists == false)
+                return new List<FilePath>();
+
             return GetFiles(DirectoryInfo.EnumerateFiles(pattern, searchOption));
         }
 
