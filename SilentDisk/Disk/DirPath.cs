@@ -174,7 +174,7 @@ namespace SilentOrbit.Disk
         /// Delete all files and folders inside
         /// but leave the root folder intact
         /// </summary>
-        public void EmptyDirectory()
+        public void EmptyDirectory(bool preserveGit = false)
         {
             if (Exists() == false)
             {
@@ -189,12 +189,18 @@ namespace SilentOrbit.Disk
                     //if (File.GetAttributes(f).HasFlag(FileAttributes.ReadOnly) == false)
                     //    continue;
 
+                    if (preserveGit && f.PathFull.Contains("\\.git\\"))
+                        continue;
+
                     f.SetAttributes(FileAttributes.Normal);
                     f.DeleteFile();
                 }
 
                 foreach (var d in Directory.GetDirectories(LongPathFull))
                 {
+                    if (preserveGit && Path.GetFileName(d) == ".git")
+                        continue;
+
                     Directory.Delete(d, true);
                 }
             });
