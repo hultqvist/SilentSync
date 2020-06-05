@@ -233,8 +233,18 @@ namespace SilentOrbit.Disk
             if (File.Exists(PathFull))
                 throw new InvalidOperationException("Expected a directory, found a file");
 
-            if (Directory.Exists(LongPathFull))
-                Directory.Delete(LongPathFull, recursive: true);
+            while (Directory.Exists(LongPathFull))
+            {
+                try
+                {
+                    Directory.Delete(LongPathFull, recursive: true);
+                }
+                catch (IOException ex)
+                {
+                    Debug.Fail(ex.Message);
+                    System.Threading.Thread.Sleep(500);
+                }
+            }
         }
 
         public void DeleteEmptyDir()

@@ -54,7 +54,16 @@ namespace SilentOrbit.Disk
         public void DeleteFile()
         {
             ClearReadOnly();
-            File.Delete(PathFull);
+            try
+            {
+                File.Delete(PathFull);
+            }
+            catch (IOException ex)
+            {
+                Debug.Fail(ex.Message);
+                System.Threading.Thread.Sleep(500);
+                File.Delete(PathFull);
+            }
         }
 
         #endregion
