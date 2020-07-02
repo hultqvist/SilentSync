@@ -239,6 +239,11 @@ namespace SilentOrbit.Disk
                 {
                     Directory.Delete(LongPathFull, recursive: true);
                 }
+                catch (UnauthorizedAccessException ex)
+                {
+                    Debug.Fail(ex.Message);
+                    System.Threading.Thread.Sleep(500);
+                }
                 catch (IOException ex)
                 {
                     Debug.Fail(ex.Message);
