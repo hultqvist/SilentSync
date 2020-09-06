@@ -1,0 +1,3 @@
+[submodule "SilentDisk"]
+	path = SilentDisk
+	url = https://github.com/SilentOrbit/SilentDisk.git
