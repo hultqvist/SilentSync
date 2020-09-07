@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>SilentOrbit</RootNamespace>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <AssemblyTitle>SilentSync</AssemblyTitle>
     <Product>SilentSync</Product>
@@ -12,6 +12,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SilentDisk\SilentDisk\SilentDisk.csproj" />
+    <ProjectReference Include="..\SilentDisk\SilentDisk.csproj" />
   </ItemGroup>
 </Project>
