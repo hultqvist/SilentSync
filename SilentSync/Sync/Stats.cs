@@ -14,10 +14,15 @@ namespace SilentOrbit.Sync
         readonly Job job;
         readonly Queue queue;
 
+        readonly int left;
+        readonly int top;
+
         public Stats(Job job, Queue queue)
         {
             this.job = job;
             this.queue = queue;
+
+            (left, top) = Console.GetCursorPosition();
 
             rateReporter = new Thread(RateReport);
             rateReporter.Name = "Rate Reporter";
@@ -121,6 +126,7 @@ namespace SilentOrbit.Sync
 
         void WriteDot(string text, ConsoleColor background)
         {
+#if FALSE
             if (job.ReportEveryFile)
                 return;
 
@@ -134,6 +140,7 @@ namespace SilentOrbit.Sync
                     Console.ForegroundColor = ConsoleColor.Black;
                 Console.Write(text);
             }
+#endif
         }
 
         void WriteFileReport(string text)
@@ -164,6 +171,7 @@ namespace SilentOrbit.Sync
                     {
                         var r = Report();
                         Console.ResetColor();
+                        Console.SetCursorPosition(left, top);
                         Console.WriteLine(r);
                     }
                 }
@@ -200,6 +208,6 @@ namespace SilentOrbit.Sync
             s.AppendFormat("{0,-11} {1,8} {2,8}/s\n", title, value, rate.ToString("0.00"));
         }
 
-        #endregion
+#endregion
     }
 }
